@@ -2,8 +2,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
+import { useState } from "react";
 
 const Index = () => {
+  const [expandedModule, setExpandedModule] = useState<number | null>(null);
+
   const modules = [
     {
       number: "01",
@@ -11,7 +14,13 @@ const Index = () => {
       description: "Знакомство с популярными AI-инструментами для генерации изображений. Изучаем интерфейсы и базовые функции.",
       duration: "2 часа",
       tasks: 3,
-      icon: "Sparkles"
+      icon: "Sparkles",
+      lessons: [
+        { title: "Введение в AI-генерацию изображений", duration: "15 мин" },
+        { title: "Обзор Midjourney и DALL-E", duration: "25 мин" },
+        { title: "Первые шаги в нейросетях", duration: "30 мин" },
+        { title: "Практика: Создаём первые изображения", duration: "50 мин" }
+      ]
     },
     {
       number: "02",
@@ -19,7 +28,14 @@ const Index = () => {
       description: "Учимся составлять детальные запросы для получения профессиональных результатов. Работа со стилями и композицией.",
       duration: "3 часа",
       tasks: 5,
-      icon: "Wand2"
+      icon: "Wand2",
+      lessons: [
+        { title: "Структура эффективного промта", duration: "20 мин" },
+        { title: "Стили фотографии: Fashion, Beauty, Portrait", duration: "35 мин" },
+        { title: "Работа с освещением и композицией", duration: "40 мин" },
+        { title: "Настройки и параметры генерации", duration: "30 мин" },
+        { title: "Практика: Создаём серию портретов", duration: "55 мин" }
+      ]
     },
     {
       number: "03",
@@ -27,15 +43,41 @@ const Index = () => {
       description: "Техники постобработки AI-изображений. Доводим результат до совершенства и создаём портфолио работ.",
       duration: "2.5 часа",
       tasks: 4,
-      icon: "Palette"
+      icon: "Palette",
+      lessons: [
+        { title: "Upscaling и улучшение качества", duration: "25 мин" },
+        { title: "Ретушь AI-изображений", duration: "35 мин" },
+        { title: "Цветокоррекция и стилизация", duration: "30 мин" },
+        { title: "Создание портфолио из AI-работ", duration: "40 мин" }
+      ]
     }
   ];
 
   const studentWorks = [
-    { id: 1, style: "Fashion портрет" },
-    { id: 2, style: "Арт-концепт" },
-    { id: 3, style: "Студийная съёмка" },
-    { id: 4, style: "Креативный портрет" }
+    { 
+      id: 1, 
+      style: "Fashion портрет",
+      image: "https://cdn.poehali.dev/projects/cbe0e5c5-2ef9-4b9c-9b38-b491361909a0/files/41769d84-c8e3-4c05-8671-2184cbafaf89.jpg",
+      description: "Профессиональная студийная съёмка с идеальным освещением"
+    },
+    { 
+      id: 2, 
+      style: "Арт-концепт",
+      image: "https://cdn.poehali.dev/projects/cbe0e5c5-2ef9-4b9c-9b38-b491361909a0/files/7db46352-cbb4-4494-ba97-745b5bb77fbc.jpg",
+      description: "Креативный подход с драматическим освещением"
+    },
+    { 
+      id: 3, 
+      style: "Студийная съёмка",
+      image: "https://cdn.poehali.dev/projects/cbe0e5c5-2ef9-4b9c-9b38-b491361909a0/files/1a21464e-61bc-4734-9517-5e084b17a9a3.jpg",
+      description: "Элегантный beauty-портрет в студийных условиях"
+    },
+    { 
+      id: 4, 
+      style: "Креативный портрет",
+      image: "https://cdn.poehali.dev/projects/cbe0e5c5-2ef9-4b9c-9b38-b491361909a0/files/0a8eff14-924a-4371-b6e5-26ce38db7870.jpg",
+      description: "Смелый авангардный стиль с яркими акцентами"
+    }
   ];
 
   const prompts = [
@@ -120,7 +162,7 @@ const Index = () => {
               {modules.map((module, index) => (
                 <Card 
                   key={index}
-                  className="bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-300 hover-scale overflow-hidden"
+                  className="bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-300 overflow-hidden"
                 >
                   <CardContent className="p-8">
                     <div className="flex flex-col md:flex-row gap-6">
@@ -141,7 +183,7 @@ const Index = () => {
                         <p className="text-lg text-muted-foreground mb-6">
                           {module.description}
                         </p>
-                        <div className="flex flex-wrap gap-4">
+                        <div className="flex flex-wrap gap-4 mb-6">
                           <div className="flex items-center gap-2 text-sm">
                             <Icon name="Clock" size={16} className="text-primary" />
                             <span>{module.duration}</span>
@@ -150,7 +192,44 @@ const Index = () => {
                             <Icon name="CheckCircle" size={16} className="text-secondary" />
                             <span>{module.tasks} практических заданий</span>
                           </div>
+                          <div className="flex items-center gap-2 text-sm">
+                            <Icon name="Video" size={16} className="text-accent" />
+                            <span>{module.lessons.length} видеоурока</span>
+                          </div>
                         </div>
+                        
+                        <Button 
+                          variant="outline"
+                          onClick={() => setExpandedModule(expandedModule === index ? null : index)}
+                          className="w-full hover-scale border-primary/30 hover:bg-primary/10"
+                        >
+                          <Icon name={expandedModule === index ? "ChevronUp" : "ChevronDown"} className="mr-2" size={20} />
+                          {expandedModule === index ? "Скрыть уроки" : "Смотреть программу"}
+                        </Button>
+                        
+                        {expandedModule === index && (
+                          <div className="mt-6 space-y-3 animate-fade-in">
+                            {module.lessons.map((lesson, lessonIndex) => (
+                              <div 
+                                key={lessonIndex}
+                                className="flex items-center justify-between p-4 rounded-lg bg-card/30 border border-border/30 hover:bg-card/50 hover:border-primary/30 transition-all group"
+                              >
+                                <div className="flex items-center gap-3">
+                                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                                    <Icon name="Play" size={18} className="text-primary" />
+                                  </div>
+                                  <div>
+                                    <p className="font-medium">{lesson.title}</p>
+                                    <p className="text-sm text-muted-foreground">Урок {lessonIndex + 1}</p>
+                                  </div>
+                                </div>
+                                <Badge variant="outline" className="border-primary/50">
+                                  {lesson.duration}
+                                </Badge>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </CardContent>
@@ -253,12 +332,19 @@ const Index = () => {
                   className="group bg-card/30 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-all duration-300 overflow-hidden hover-scale"
                 >
                   <CardContent className="p-0">
-                    <div className="aspect-[4/5] bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 flex items-center justify-center relative overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <Icon name="Image" size={64} className="text-muted-foreground/30" />
+                    <div className="aspect-[4/5] relative overflow-hidden">
+                      <img 
+                        src={work.image} 
+                        alt={work.style}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                        <Badge className="bg-primary/80">{work.style}</Badge>
-                        <p className="text-sm text-muted-foreground mt-2">
+                        <Badge className="bg-primary/90 mb-2">{work.style}</Badge>
+                        <p className="text-sm text-foreground/90 font-medium">
+                          {work.description}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
                           Создано с помощью нейросетей
                         </p>
                       </div>
