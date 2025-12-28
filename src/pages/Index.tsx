@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Icon from "@/components/ui/icon";
 import { useState } from "react";
+import CourseEnrollment from "@/components/CourseEnrollment";
 
 const Index = () => {
   const [expandedModule, setExpandedModule] = useState<number | null>(null);
@@ -16,10 +17,22 @@ const Index = () => {
       tasks: 3,
       icon: "Sparkles",
       lessons: [
-        { title: "Введение в AI-генерацию изображений", duration: "15 мин" },
-        { title: "Обзор Midjourney и DALL-E", duration: "25 мин" },
-        { title: "Первые шаги в нейросетях", duration: "30 мин" },
-        { title: "Практика: Создаём первые изображения", duration: "50 мин" }
+        { 
+          title: "Что такое AI-фотосессии и как они работают", 
+          description: "Узнайте, как нейросети создают реалистичные фото и почему это будущее фотографии"
+        },
+        { 
+          title: "Регистрируемся в Midjourney за 5 минут", 
+          description: "Пошаговая инструкция: от создания аккаунта до первой генерации"
+        },
+        { 
+          title: "Интерфейс и основные команды", 
+          description: "Разберём, как управлять нейросетью: кнопки, настройки, параметры"
+        },
+        { 
+          title: "Создаём первый портрет с нуля", 
+          description: "Практика: вводим простой запрос, получаем результат и улучшаем его"
+        }
       ]
     },
     {
@@ -30,11 +43,26 @@ const Index = () => {
       tasks: 5,
       icon: "Wand2",
       lessons: [
-        { title: "Структура эффективного промта", duration: "20 мин" },
-        { title: "Стили фотографии: Fashion, Beauty, Portrait", duration: "35 мин" },
-        { title: "Работа с освещением и композицией", duration: "40 мин" },
-        { title: "Настройки и параметры генерации", duration: "30 мин" },
-        { title: "Практика: Создаём серию портретов", duration: "55 мин" }
+        { 
+          title: "Формула идеального промта: 5 компонентов", 
+          description: "Четкая структура: объект + стиль + освещение + ракурс + детали"
+        },
+        { 
+          title: "Fashion и Beauty: разбираем конкретные примеры", 
+          description: "Копируйте готовые промты для модных портретов и beauty-съёмок"
+        },
+        { 
+          title: "Свет и тень: как управлять освещением", 
+          description: "Студийный свет, золотой час, драматический свет — всё через слова"
+        },
+        { 
+          title: "Параметры --ar, --stylize, --chaos", 
+          description: "Как настроить пропорции, стилизацию и креативность AI"
+        },
+        { 
+          title: "Создаём 10 разных портретов", 
+          description: "Практика: экспериментируем со стилями, создаём свою коллекцию"
+        }
       ]
     },
     {
@@ -45,10 +73,22 @@ const Index = () => {
       tasks: 4,
       icon: "Palette",
       lessons: [
-        { title: "Upscaling и улучшение качества", duration: "25 мин" },
-        { title: "Ретушь AI-изображений", duration: "35 мин" },
-        { title: "Цветокоррекция и стилизация", duration: "30 мин" },
-        { title: "Создание портфолио из AI-работ", duration: "40 мин" }
+        { 
+          title: "Увеличиваем разрешение до 4K", 
+          description: "Инструменты Upscale в Midjourney + бесплатные сервисы для улучшения"
+        },
+        { 
+          title: "Исправляем недочёты AI: руки, лицо, детали", 
+          description: "Простые способы ретуши без Photoshop — через онлайн-сервисы"
+        },
+        { 
+          title: "Добавляем цветовые фильтры и эффекты", 
+          description: "Создаём уникальный стиль: винтаж, кино, минимализм"
+        },
+        { 
+          title: "Собираем портфолио и публикуем", 
+          description: "Как оформить, где разместить и как начать зарабатывать на AI-фото"
+        }
       ]
     }
   ];
@@ -193,8 +233,8 @@ const Index = () => {
                             <span>{module.tasks} практических заданий</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
-                            <Icon name="Video" size={16} className="text-accent" />
-                            <span>{module.lessons.length} видеоурока</span>
+                            <Icon name="BookOpen" size={16} className="text-accent" />
+                            <span>{module.lessons.length} мини-гайда</span>
                           </div>
                         </div>
                         
@@ -204,7 +244,7 @@ const Index = () => {
                           className="w-full hover-scale border-primary/30 hover:bg-primary/10"
                         >
                           <Icon name={expandedModule === index ? "ChevronUp" : "ChevronDown"} className="mr-2" size={20} />
-                          {expandedModule === index ? "Скрыть уроки" : "Смотреть программу"}
+                          {expandedModule === index ? "Скрыть гайды" : "Посмотреть гайды"}
                         </Button>
                         
                         {expandedModule === index && (
@@ -214,17 +254,17 @@ const Index = () => {
                                 key={lessonIndex}
                                 className="flex items-center justify-between p-4 rounded-lg bg-card/30 border border-border/30 hover:bg-card/50 hover:border-primary/30 transition-all group"
                               >
-                                <div className="flex items-center gap-3">
-                                  <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                                    <Icon name="Play" size={18} className="text-primary" />
+                                <div className="flex items-start gap-3 flex-1">
+                                  <div className="w-10 h-10 flex-shrink-0 rounded-lg bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                                    <Icon name="BookOpen" size={18} className="text-primary" />
                                   </div>
-                                  <div>
-                                    <p className="font-medium">{lesson.title}</p>
-                                    <p className="text-sm text-muted-foreground">Урок {lessonIndex + 1}</p>
+                                  <div className="flex-1">
+                                    <p className="font-medium mb-1">{lesson.title}</p>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">{lesson.description}</p>
                                   </div>
                                 </div>
-                                <Badge variant="outline" className="border-primary/50">
-                                  {lesson.duration}
+                                <Badge variant="outline" className="border-primary/50 flex-shrink-0">
+                                  Гайд {lessonIndex + 1}
                                 </Badge>
                               </div>
                             ))}
@@ -356,31 +396,7 @@ const Index = () => {
           </div>
         </section>
 
-        <section className="container mx-auto px-4 py-20">
-          <div className="max-w-4xl mx-auto">
-            <Card className="bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 backdrop-blur-sm border-border/50 overflow-hidden">
-              <CardContent className="p-12 text-center">
-                <Icon name="Rocket" size={64} className="mx-auto mb-6 text-primary animate-float" />
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">
-                  Готовы создавать?
-                </h2>
-                <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                  Начните обучение сегодня и получите бесплатный сборник из 50 промтов
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button size="lg" className="text-lg px-10 py-6 hover-scale bg-gradient-to-r from-primary via-secondary to-accent">
-                    <Icon name="Sparkles" className="mr-2" size={20} />
-                    Записаться на курс
-                  </Button>
-                  <Button size="lg" variant="outline" className="text-lg px-10 py-6 hover-scale border-primary/50 hover:bg-primary/10">
-                    <Icon name="MessageCircle" className="mr-2" size={20} />
-                    Задать вопрос
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
+        <CourseEnrollment />
 
         <footer className="container mx-auto px-4 py-12 border-t border-border/50">
           <div className="text-center text-muted-foreground">
